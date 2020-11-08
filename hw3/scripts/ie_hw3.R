@@ -18,5 +18,18 @@ q1_model = census %>%
 
 summary(q1_model)$coef[,1:2]
 
-### Question 2 ------------
+### Question 4 ------------
+
+census = census %>%
+  mutate(YOB_int_QOB = as.factor(interaction(YOB, QOB)))
+
+q4_model = census %>%
+  lm(formula = EDUC ~ YOB_int_QOB + QOB + MARRIED + REGION + YOB)
+
+summary(q4_model)
+
+# There is collinearity since the interaction terms include each quarter.. How to fix this ??
+# The following fixes it but it is not ideal..
+na.omit(summary(q4_model)$coef)[,1:2]
+
 

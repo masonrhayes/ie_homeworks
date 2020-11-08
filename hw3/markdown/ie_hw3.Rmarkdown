@@ -23,3 +23,7 @@ Omitted variable bias.
 
 ## Why do you think the instrument (year of birth interacted with quarter of birth) is exogenous?
 
+This instrument is exogenous because none of the other variables in the model can plausibly affect the year of birth or the quarter of birth. However, we still need to establish the relevance of this instrument.
+
+
+
