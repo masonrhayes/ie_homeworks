@@ -30,6 +30,10 @@ summary(q4_model)
 
 # There is collinearity since the interaction terms include each quarter.. How to fix this ??
 # The following fixes it but it is not ideal..
+<<<<<<< HEAD
 na.omit(summary(q4_model)$coef)[,1:2]
 
+=======
+na.omit(summary(q4_model)$coef)
+>>>>>>> 37cdbe4490636b6a380fda349de8ca11ab211d9c
 
