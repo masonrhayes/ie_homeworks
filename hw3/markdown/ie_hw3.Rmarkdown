@@ -1,0 +1,25 @@
+# Question 1
+
+The coefficient estimates and their standard errors can be seen by
+
+```
+q1_model = census %>%
+  lm(formula = LWKLYWGE ~ EDUC + MARRIED + REGION + YOB)
+
+summary(q1_model)$coef[,1:2]
+```
+
+# Question 2
+
+## Why might EDUC be endogenous?
+
+There are various reasons why the variable education might be endogenous. For example, those who have the ability to receive a high weekly wage when they are young might be more likely to drop out of school, since they will deem it not as useful as those who do not have these high-wage opportunities. The year of birth itself might also influence education, since there is a general trend of higher education as time passes.
+
+## What is the most likely explanation for the endogeneity of education?
+
+Omitted variable bias.
+
+# Question 3
+
+## Why do you think the instrument (year of birth interacted with quarter of birth) is exogenous?
+
