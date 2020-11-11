@@ -71,9 +71,9 @@ $t = \frac{\hat{\beta}_{2SLS} - \hat{\beta}_{OLS}}{\sqrt{\hat{Var}(\hat{\beta}_{
 Under $H_0: \hat{t} \to^d N(0,1)$
 
 From R
-$|\hat{t}| = 0.7 < 1.96$
+$|\hat{t}| = 0.7 < 1.64$
 
-We fail to reject the null hypothesis (i.e. exogeneity) at 95% confidence level.
+We fail to reject the null hypothesis (i.e. exogeneity) at 10% significant level.
 
 # Question 9 
 

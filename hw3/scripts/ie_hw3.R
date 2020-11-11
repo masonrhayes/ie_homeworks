@@ -51,6 +51,6 @@ varIV_educ <- vcov(q6_model)[2,2]
 hausman <- (betaOLS_educ - betaIV_educ) / sqrt(varIV_educ - varOLS_educ)
 hausman
 
-# |t| = 0.7: We can't reject H0  
+# |t| = 0.7: We can't reject H0 at 10% level
 
 
