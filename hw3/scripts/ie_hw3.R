@@ -42,7 +42,8 @@ diagnostic_stats = q6_diagnostics$diagnostics[11:12,]
 
 diagnostic_stats
 
-## Wu-Hausman stat = 0.877; Sargan stat = 13.99. Fail to reject null for each.
+## Wu-Hausman stat = 0.877; Sargan stat = 13.99. Fail to reject null for each --> we cannot reject that educ is exogenous, and we cannot reject that the instruments are invalid.
+
 
 ### Question 8
 
@@ -52,7 +53,7 @@ varOLS_educ <- vcov(q1_model)[2,2]
 betaIV_educ <- coefficients(q6_model)[2]
 varIV_educ <- vcov(q6_model)[2,2]
 
-hausman <- (betaOLS_educ - betaIV_educ) / sqrt(varIV_educ - varOLS_educ)
+hausman <- (betaIV_educ - betaOLS_educ) / sqrt(varIV_educ - varOLS_educ)
 hausman
 
 # |t| = 0.7: We can't reject H0 at 10% level
