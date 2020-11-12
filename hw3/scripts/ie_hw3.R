@@ -20,55 +20,29 @@ summary(q1_model)$coef[,1:2]
 
 ### Question 4 ------------
 
-census = census %>%
-  mutate(YOB_int_QOB = factor(interaction(YOB, QOB)))
-
-census$YOBxQOB = NA
-
-## This for-loop will take a while... (took me 6 minutes with 16 GB of RAM, 10th gen i7 processor). Super inefficient, but it works: here were are saying to create a new factor, the interaction of YOB and QOB, only if the year is not y39 and the quarter is not q4 -- this  should solve the issue of collinearity.
-## 
-
-for(i in 1:dim(census)[1]){
-  if(census$QOB[i] != "q4" & census$YOB[i] != "y39"){
-    census$YOBxQOB[i] = paste(census$YOB[i], census$QOB[i], sep = ".")
-  }
-}
-
-
-
-census = census %>%
-  mutate(YOBxQOB = factor(YOBxQOB))
-
-## Testing the difference between easily created variable (using mutate fxn) and from using the for loop...
-## First is the easy model
 q4_model = census %>%
-  lm(formula = EDUC ~ YOB_int_QOB + QOB + MARRIED + REGION + YOB)
-
-# This is the model with the for-loop generated interaction term
-q4_model2 = census %>%
-  lm(formula = EDUC ~ YOBxQOB + QOB + MARRIED + REGION + YOB)
+  lm(formula = EDUC ~ YOB * QOB + QOB + MARRIED + REGION + YOB)
 
 summary(q4_model)
-summary(q4_model2)
-
-## We find that there is effectively 0 difference in the models, no reason to use such an inefficient for loop
-
-# There is collinearity. Let's see the coefficients without na values
-na.omit(summary(q4_model)$coef)[,1:2]
 
 
 ### Question 6 ------------
 
-#using ivreg, and again comparing the models using the 2 different interaction terms
+#using ivreg; instruments are YOB * QOB interaction term and QOB
 
-q6_model = ivreg(LWKLYWGE ~ EDUC + MARRIED + REGION + YOB | YOB_int_QOB + QOB, data = census)
+q6_model = ivreg(LWKLYWGE ~ EDUC + MARRIED + REGION + YOB | YOB * QOB + QOB, data = census)
 
-q6_model2 = ivreg(LWKLYWGE ~ EDUC + MARRIED + REGION + YOB | YOBxQOB + QOB, data = census)
+## See a summary of the model and diagnostics to show the Wu-Hausman and Sargan stats
 
+q6_diagnostics = summary(q6_model, diagnostics = TRUE)
 
-## Here we find that though these 2 interaction terms made a very similar  model in Q4, in question 6 the choice of the interaction term makes a very big difference on the coefficients.. We may have a big estimation problem here.
+q6_diagnostics
 
-summary(q6_model, diagnostics = TRUE)
+diagnostic_stats = q6_diagnostics$diagnostics[11:12,]
+
+diagnostic_stats
+
+## Wu-Hausman stat = 0.877; Sargan stat = 13.99. Fail to reject null for each.
 
 ### Question 8
 
