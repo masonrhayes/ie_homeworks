@@ -31,33 +31,36 @@ Report regression result of equation (2) in R:
 
 
 ```
-census = census %>%
-  mutate(YOB_int_QOB = as.factor(interaction(YOB, QOB)))
-
 q4_model = census %>%
-  lm(formula = EDUC ~ YOB_int_QOB + QOB + MARRIED + REGION + YOB)
+  lm(formula = EDUC ~ YOB * QOB + QOB + MARRIED + REGION + YOB)
 
-summary(q4_model)
+# Return the coefficient estimates and standard errors.
+
+summary(q4_model)$coef[,1:2]
 ```
 
 # Question 5
 
-If we reject $H_0$ at 10%, it means that the relevance assumption of the valid IV is not violated.
+If we reject $H_0$ at 0.10%, it means that the relevance assumption of the valid IV is not violated.
 
 # Question 6
 
 Report 2SLS regression in R:
 
+We have to include all exogenous regressors as instruments in the regression as well:
+
 ```
-q6_model = ivreg(LWKLYWGE ~ EDUC + MARRIED + REGION + YOB | YOB_int_QOB + QOB, data = census)
-summary(q6_model)
+q6_model = ivreg(LWKLYWGE ~ EDUC + MARRIED + REGION + YOB | YOB * QOB + QOB + MARRIED + REGION + YOB, data = census)
+
+summary(q6_model, diagnostics = TRUE)
+
 ```
 
 # Question 7 
 
-(a) All else equal, 1 year in education increases weekly wage by roughly 8%.
+(a) All else equal, 1 year in education increases weekly wage by approximately 8.95%.
 
-(b) Yes, it is significant at 0.1% since $t = 4.107 > t_{(1-\alpha)/2, df} = 1.2815 $.
+(b) Yes, it is significant at 0.1% since $t = 5.65 > t_{(0.999, df} = 3.291$.
 
 # Question 8
 

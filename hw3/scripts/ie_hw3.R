@@ -24,7 +24,7 @@ q4_model = census %>%
   lm(formula = EDUC ~ YOB * QOB + QOB + MARRIED + REGION + YOB)
 
 summary(q4_model)
-
+summary(q4_model)$coef[,1:2]
 
 ### Question 6 ------------
 
@@ -37,6 +37,12 @@ q6_model = ivreg(LWKLYWGE ~ EDUC + MARRIED + REGION + YOB | YOB * QOB + QOB + MA
 q6_diagnostics = summary(q6_model, diagnostics = TRUE)
 
 q6_diagnostics
+
+## See coefficients and SEs of q6_model
+
+q6_diagnostics$coefficients[,1:2]
+
+## What are the weak instrument, Wu-Hausman, and Sargan tests as reported by the ivreg model?
 
 diagnostic_stats = q6_diagnostics$diagnostics
 
@@ -56,7 +62,7 @@ varIV_educ <- vcov(q6_model)[2,2]
 hausman <- (betaIV_educ - betaOLS_educ) / sqrt(varIV_educ - varOLS_educ)
 hausman
 
-# |t| = 0.7: We can't reject H0 at 10% level
+# |t| = 1.33: We can't reject H0 at 10% level
 
 ### Question 9 --------
 ### 
@@ -66,3 +72,4 @@ q6_residuals = q6_model$residuals
 q9_model = lm(data = census, formula = q6_residuals ~ YOB * QOB + QOB + MARRIED + REGION + YOB)
 
 summary(q9_model)
+
