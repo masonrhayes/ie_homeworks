@@ -1,5 +1,9 @@
-# Intermediate Econometrics HW3
-by Vanlik Tan and Mason Hayes
+---
+title: "Intermediate Econometrics HW3"
+author: "Mason Hayes and Vanlik TAN"
+date: "11/13/2020"
+output: pdf_document
+---
 
 
 # Question 1
@@ -45,7 +49,7 @@ summary(q4_model)$coef[,1:2]
 
 # Question 5
 
-If we reject $H_0$ at 0.10%, it means that the relevance assumption of the valid IV is not violated.
+If we reject $H_0$ at 0.10%, it means that the relevance assumption of the valid IV is satisfied.
 
 # Question 6
 
@@ -64,12 +68,14 @@ summary(q6_model, diagnostics = TRUE)
 
 (a) All else equal, 1 year in education increases weekly wage by approximately 8.95%.
 
-(b) Yes, it is significant at 0.1% since $t = 5.65 > t_{(0.999, df} = 3.291$.
+(b) Yes, it is significant at 0.1% since $t = 5.65 > t_{(0.999, df)} = 3.291$.
 
 # Question 8
 
 We examine the following hypothesis:
+
 $H_0: E[X'\epsilon] = 0$ (Exogeneity)
+
 $H_1: E[X'\epsilon] \neq 0$ (Endogeneity)
 
 Test statistics
@@ -78,6 +84,7 @@ $t = \frac{\hat{\beta}_{2SLS} - \hat{\beta}_{OLS}}{\sqrt{\hat{Var}(\hat{\beta}_{
 Under $H_0: \hat{t} \to^d N(0,1)$
 
 From R
+
 $|\hat{t}| = 1.333 < 1.64$
 
 We fail to reject the null hypothesis (i.e. exogeneity) at 10% significant level.
@@ -97,13 +104,13 @@ summary(q9_model)
 
 Hypothesis to test:
 
-H0 : instruments are exogenous vs. H1 : instruments are not exogenous
+$H_0$ : instruments are exogenous vs. $H_1$ : instruments are not exogenous
 
 Test statistic:
 
-$test_stat = n * R^2 = 24.609026$
+$test_{statistics} = n * R^2 = 24.609026$
 
-The test statistic approaches in distribution a chi-squared distribution under the null. We fail to reject the null since $p_{value} = 0.7 > 10%$.
+The test statistic approaches in distribution a chi-squared distribution under the null. We fail to reject the null since $p_{value} = 0.7 > 10\%$.
 
 
 
