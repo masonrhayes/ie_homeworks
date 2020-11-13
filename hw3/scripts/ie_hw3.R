@@ -30,7 +30,7 @@ summary(q4_model)
 
 #using ivreg; instruments are YOB * QOB interaction term and QOB
 
-q6_model = ivreg(LWKLYWGE ~ EDUC + MARRIED + REGION + YOB | YOB * QOB + QOB, data = census)
+q6_model = ivreg(LWKLYWGE ~ EDUC + MARRIED + REGION + YOB | YOB * QOB + QOB + MARRIED + REGION + YOB, data = census)
 
 ## See a summary of the model and diagnostics to show the Wu-Hausman and Sargan stats
 
@@ -38,16 +38,16 @@ q6_diagnostics = summary(q6_model, diagnostics = TRUE)
 
 q6_diagnostics
 
-diagnostic_stats = q6_diagnostics$diagnostics[11:12,]
+diagnostic_stats = q6_diagnostics$diagnostics
 
 diagnostic_stats
 
-## Wu-Hausman stat = 0.877; Sargan stat = 13.99. Fail to reject null for each --> we cannot reject that educ is exogenous, and we cannot reject that the instruments are invalid.
+## Wu-Hausman stat = 1.80; Sargan stat = 24.61. We reject null for each --> we  reject that educ is exogenous, and we reject that the instruments are invalid; implying that education is indeed endogenous and that the instruments are likely correlated with the error term.
 
 
-### Question 8
+### Question 8 ------- No we calculate manually the (practical) Hausman test
 
-# Hausman test ----
+# (Practical) Hausman test ----
 betaOLS_educ <- coefficients(q1_model)[2]
 varOLS_educ <- vcov(q1_model)[2,2]
 betaIV_educ <- coefficients(q6_model)[2]
@@ -58,4 +58,11 @@ hausman
 
 # |t| = 0.7: We can't reject H0 at 10% level
 
+### Question 9 --------
+### 
 
+q6_residuals = q6_model$residuals
+
+q9_model = lm(data = census, formula = q6_residuals ~ YOB * QOB + QOB + MARRIED + REGION + YOB)
+
+summary(q9_model)
