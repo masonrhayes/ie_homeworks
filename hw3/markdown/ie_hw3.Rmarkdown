@@ -1,3 +1,7 @@
+# Intermediate Econometrics HW3
+by Vanlik Tan and Mason Hayes
+
+
 # Question 1
 
 The coefficient estimates and their standard errors can be seen by
@@ -80,8 +84,18 @@ We fail to reject the null hypothesis (i.e. exogeneity) at 10% significant level
 
 # Question 9 
 
+We take the residuals from the Question 6 Model and run the following regression:
 
+```
+q6_residuals = q6_model$residuals
 
+q9_model = lm(data = census, formula = q6_residuals ~ YOB * QOB + QOB + MARRIED + REGION + YOB)
+
+summary(q9_model)
+
+```
+
+Here we test if the coefficients on the instruments are different from zero. The test statistic approaches in distribution a chi-squared distribution under the null. We fail to reject the null since $F = 0.5127$.
 
 
 
