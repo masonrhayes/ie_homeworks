@@ -95,7 +95,15 @@ summary(q9_model)
 
 ```
 
-Here we test if the coefficients on the instruments are different from zero. The test statistic approaches in distribution a chi-squared distribution under the null. We fail to reject the null since $F = 0.5127$.
+Hypothesis to test:
+
+H0 : instruments are exogenous vs. H1 : instruments are not exogenous
+
+Test statistic:
+
+$test_stat = n * R^2 = 24.609026$
+
+The test statistic approaches in distribution a chi-squared distribution under the null. We fail to reject the null since $p_{value} = 0.7 > 10%$.
 
 
 
