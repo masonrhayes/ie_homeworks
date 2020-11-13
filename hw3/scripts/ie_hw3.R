@@ -69,7 +69,15 @@ hausman
 
 q6_residuals = q6_model$residuals
 
-q9_model = lm(data = census, formula = q6_residuals ~ YOB * QOB + QOB + MARRIED + REGION + YOB)
+q9_model_sargan = lm(data = census, formula = q6_residuals ~ YOB * QOB + QOB + MARRIED + REGION + YOB)
 
-summary(q9_model)
+summary(q9_model_sargan)
+
+n = nrow(census)
+J1 = n * summary(q9_model_sargan)$r.squared
+J1
+
+# compute the p-value
+pvalue  <-  diagnostic_stats[3,4]
+pvalue
 
